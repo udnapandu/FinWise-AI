@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinWise AI</title>
+
+<style>
+/* ================= BASE ================= */
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f6f9ff;
+  color:#222;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    linear-gradient(to right,rgba(0,0,0,.03) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(0,0,0,.03) 1px,transparent 1px);
+  background-size:48px 48px;
+  pointer-events:none;
+  z-index:-1;
+}
+.dark{
+  background:#020617;
+  color:#fff;
+}
+.dark::before{
+  background:
+    linear-gradient(to right,rgba(255,255,255,.1) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(255,255,255,.1) 1px,transparent 1px);
+}
+
+/* ================= HERO ================= */
+.hero{
+  text-align:center;
+  padding:90px 20px;
+}
+.logo{
+  width:90px;
+  margin:auto;
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-10px)}
+}
+.logo rect{
+  animation:grow 1.6s ease forwards;
+  transform-origin:bottom;
+}
+.logo rect:nth-child(2){animation-delay:.2s}
+.logo rect:nth-child(3){animation-delay:.4s}
+.logo rect:nth-child(4){animation-delay:.6s}
+@keyframes grow{
+  from{transform:scaleY(0)}
+  to{transform:scaleY(1)}
+}
+.hero h1{font-size:38px;margin:16px 0}
+.hero span{color:#22c55e}
+.hero p{max-width:520px;margin:auto;color:#555}
+.dark .hero p{color:#e5e7eb}
+
+/* ================= BUTTON ================= */
+.btn{
+  padding:14px;
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+  color:#fff;
+  border:none;
+  border-radius:14px;
+  font-weight:bold;
+  cursor:pointer;
+  width:100%;
+  margin-top:10px;
+}
+
+/* ================= FEATURES ================= */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:22px;
+  padding:20px;
+}
+.feature{
+  background:#fff;
+  padding:22px;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08);
+}
+.dark .feature{
+  background:#111827;
+  border:2px solid #1e293b;
+}
+
+/* ================= APP ================= */
+.app{
+  max-width:420px;
+  margin:80px auto;
+  background:#fff;
+  border-radius:26px;
+  padding:26px;
+  box-shadow:0 30px 70px rgba(0,0,0,.15);
+}
+.dark .app{
+  background:#1e293b;
+  border:2px solid #334155;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:12px;
+  border:1px solid #ccc;
+}
+.dark input{
+  background:#020617;
+  color:#fff;
+  border:2px solid #475569;
+}
+
+/* ================= CHART ================= */
+.chart{
+  margin-top:20px;
+  padding:14px;
+  border-radius:14px;
+}
+.dark .chart{
+  background:#020617;
+  border:2px solid #334155;
+}
+.label{font-size:12px;margin-bottom:6px}
+.bar{
+  height:14px;
+  background:#ddd;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:12px;
+}
+.bar span{
+  display:block;
+  height:100%;
+  width:0%;
+  transition:1s;
+}
+.exp{background:#ef4444}
+.rem{background:#22c55e}
+
+/* ================= SCORE ================= */
+.score-box{
+  margin-top:16px;
+  background:#f1f8f4;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+}
+.dark .score-box{
+  background:#020617;
+  border:2px solid #334155;
+}
+.score{
+  font-size:32px;
+  font-weight:bold;
+}
+.score.low{color:#ef4444}
+.score.mid{color:#facc15}
+.score.high{color:#22c55e}
+
+/* ================= RING ================= */
+.ring{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  margin:20px auto;
+  background:conic-gradient(#22c55e 0deg,var(--deg),#ddd var(--deg));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.ring span{
+  background:#fff;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+.dark .ring span{background:#020617}
+.ring.low{box-shadow:0 0 25px rgba(239,68,68,.7)}
+.ring.mid{box-shadow:0 0 25px rgba(250,204,21,.7)}
+.ring.high{box-shadow:0 0 30px rgba(34,197,94,.8)}
+
+/* ================= INSIGHT ================= */
+.insight{
+  margin-top:16px;
+  font-size:13px;
+  background:#f9f9f9;
+  padding:14px;
+  border-left:4px solid #22c55e;
+  border-radius:10px;
+}
+.dark .insight{
+  background:#020617;
+}
+
+/* ================= BADGE ================= */
+.edu-badge{
+  font-size:11px;
+  padding:6px 10px;
+  border-radius:20px;
+  background:#e0f2fe;
+  color:#0369a1;
+  display:inline-block;
+  margin-bottom:10px;
+}
+.dark .edu-badge{
+  background:#0c4a6e;
+  color:#bae6fd;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+  text-align:center;
+  font-size:12px;
+  color:#777;
+  padding:20px;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width:600px){
+  .hero{padding:60px 16px}
+  .hero h1{font-size:28px}
+  .logo{width:70px}
+  .features{grid-template-columns:1fr}
+  .app{margin:30px 12px;padding:20px}
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+  <svg class="logo" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#22c55e"/>
+    <rect x="30" y="42" width="8" height="26" fill="#fff"/>
+    <rect x="46" y="32" width="8" height="36" fill="#fff"/>
+    <rect x="62" y="22" width="8" height="46" fill="#fff"/>
+  </svg>
+  <h1>FinWise <span>AI</span></h1>
+  <p>Simulasi literasi finansial untuk membangun kebiasaan keuangan sehat.</p>
+  <button class="btn" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">
+    Coba Simulasi
+  </button>
+</section>
+
+<div class="features">
+  <div class="feature">📊 Simulasi Visual</div>
+  <div class="feature">🤖 AI Insight</div>
+  <div class="feature">🚀 Startup Ready</div>
+</div>
+
+<div id="app" class="app">
+  <h3>Simulasi Keuangan</h3>
+  <div class="edu-badge">👤 STUDENT | 🎯 NABUNG</div>
+
+  <button class="btn" onclick="toggleDark()">🌙 Dark Mode</button>
+  <button class="btn" onclick="toggleEdu()">🎓 Mode Edukasi</button>
+
+  <input id="income" type="number" placeholder="Penghasilan Bulanan">
+  <input id="percent" type="number" placeholder="Pengeluaran (%)">
+  <input id="target" type="number" placeholder="Target Keuangan">
+
+  <button class="btn" onclick="hitung()">Analisis</button>
+
+  <div class="chart">
+    <div class="label">Pengeluaran</div>
+    <div class="bar"><span id="barExp" class="exp"></span></div>
+    <div class="label">Sisa Uang</div>
+    <div class="bar"><span id="barRem" class="rem"></span></div>
+  </div>
+
+  <div class="score-box">
+    Financial Health Score
+    <div class="score" id="score">–</div>
+  </div>
+
+  <div class="ring" id="ring" style="--deg:0deg">
+    <span id="ringText">0%</span>
+  </div>
+
+  <div id="insight" class="insight"></div>
+
+  <div id="cta" style="display:none;margin-top:14px">
+    <button class="btn" onclick="simulasiUlang()">🔁 Simulasi Ulang</button>
+    <button class="btn" onclick="buatRencana()">📋 Buat Rencana AI</button>
+  </div>
+</div>
+
+<div class="footer">© 2025 FinWise AI</div>
+
+<script>
+let eduMode = false;
+
+/* ===== TOGGLE ===== */
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+function toggleEdu(){
+  eduMode = !eduMode;
+  alert(eduMode ? "Mode Edukasi Aktif" : "Mode Edukasi Nonaktif");
+}
+
+/* ===== HITUNG (FIXED) ===== */
+function hitung(){
+
+  const incomeEl  = document.getElementById("income");
+  const percentEl = document.getElementById("percent");
+  const targetEl  = document.getElementById("target");
+
+  const barExp    = document.getElementById("barExp");
+  const barRem    = document.getElementById("barRem");
+  const scoreEl   = document.getElementById("score");
+  const ring      = document.getElementById("ring");
+  const ringText  = document.getElementById("ringText");
+  const insightEl = document.getElementById("insight");
+  const cta       = document.getElementById("cta");
+
+  const income  = Number(incomeEl.value);
+  const percent = Number(percentEl.value);
+  const target  = Number(targetEl.value);
+
+  if(!income || percent < 0 || percent > 100){
+    alert("Masukkan data dengan benar");
+    return;
+  }
+
+  const exp = income * percent / 100;
+  const rem = income - exp;
+
+  /* BAR */
+  barExp.style.width = percent + "%";
+  barRem.style.width = (100 - percent) + "%";
+
+  /* SCORE */
+  const scoreVal = 100 - percent;
+  scoreEl.innerText = scoreVal;
+  scoreEl.className = "score";
+
+  if(scoreVal < 40) scoreEl.classList.add("low");
+  else if(scoreVal < 70) scoreEl.classList.add("mid");
+  else scoreEl.classList.add("high");
+
+  /* RING */
+  ring.className = "ring";
+
+  if(scoreVal < 40) ring.classList.add("low");
+  else if(scoreVal < 70) ring.classList.add("mid");
+  else ring.classList.add("high");
+
+  const progress = target
+    ? Math.min(100, Math.round(rem / target * 100))
+    : 0;
+
+  ring.style.setProperty("--deg", (progress * 3.6) + "deg");
+  ringText.innerText = progress + "%";
+
+  /* INSIGHT */
+  let insight = "";
+  const idealSave = income * 0.2;
+
+  if(scoreVal < 40){
+    insight = "🚨 Pengeluaran terlalu tinggi.\n";
+  }else if(scoreVal < 70){
+    insight = "⚖ Keuangan cukup stabil.\n";
+  }else{
+    insight = "🌱 Keuangan sangat sehat.\n";
+  }
+
+  if(rem < idealSave){
+    insight += "💡 Tambah tabungan ± Rp " +
+      (idealSave - rem).toLocaleString("id-ID");
+  }else{
+    insight += "✅ Tabungan sudah ideal (≥20%).";
+  }
+
+  if(eduMode){
+    insight += "\n\n🎓 Edukasi: Aturan 20% membantu keuangan jangka panjang.";
+  }
+
+  insightEl.innerText = insight;
+  cta.style.display = "block";
+}
+
+/* ===== CTA ===== */
+function simulasiUlang(){
+  document.getElementById("income").focus();
+}
+
+function buatRencana(){
+  alert(
+    "📋 Rencana AI:\n" +
+    "1. Sisihkan tabungan di awal bulan\n" +
+    "2. Batasi pengeluaran < 70%\n" +
+    "3. Evaluasi keuangan setiap bulan"
+  );
+}
+</script>
+
+</body>
+</html>
